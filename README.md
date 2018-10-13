@@ -1,2 +1,9 @@
 # safari-bookmarks.pl
-A Perl script to export Safari bookmarks (and reading list) as text.
+
+Export Safari bookmarks (and reading list) as plain text.
+
+Default format : title url [description]
+
+Reads from ~/Library/Safari/Bookmarks.plist or first arg (if supplied), writes to stdout.
+
+For mac only.
