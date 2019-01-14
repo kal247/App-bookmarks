@@ -1,13 +1,14 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 #
 # safari-bookmarks.pl
 #
 # Export Safari bookmarks (and reading list) as plain text.
-# Default format : title url [description]
+# Default output format : title url [description]
 # Reads from ~/Library/Safari/Bookmarks.plist or first arg (if supplied), writes to stdout.
 # For mac only.
 #
-# 2018.09.21 v0.11 jul : arg and -a
+# 2019.01.14 v0.12 jul : fixed case sensitive regex
+# 2018.09.21 v0.11 jul : added arg and -a
 # 2018.09.01 v0.10 jul : created
 
 use strict;
@@ -16,7 +17,7 @@ use utf8;
 use Getopt::Std;
 use File::Basename;
 
-our $VERSION 	= '0.11';
+our $VERSION 	= '0.12';
 my $program		= basename($0);
 my $usage   	= <<EOF;
 
@@ -25,7 +26,7 @@ Usage: $program [-hVd] [file]
     -h, --help      help
     -V, --version   version
     -d              debug
-    -a              all : title url description
+    -a              all : export description
 EOF
 
 # options
@@ -61,11 +62,11 @@ my @bookmarks = grep /URLString/, @pieces;
 
 # print
 foreach my $bm (@bookmarks)
-{	
-	print "$1 " if $bm =~ /"title" => "(.+)"/;
-	print "$1 " if $bm =~ /"URLString" => "(.+)"/;
-	print "$1"  if $bm =~ /"PreviewText" => "(.+)"/ and $all;
-	print "\n";
+{
+    print "$1 " if $bm =~ /"title" => "(.+)"/i;
+    print "$1 " if $bm =~ /"URLString" => "(.+)"/i;
+    print "$1"  if $bm =~ /"PreviewText" => "(.+)"/i and $all;
+    print "\n";
 }
 
 my $n = @bookmarks;
