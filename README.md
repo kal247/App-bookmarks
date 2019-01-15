@@ -9,7 +9,10 @@ Reads from `~/Library/Safari/Bookmarks.plist` or first arg (if supplied), writes
 Usage
 -----
 
-`safari-bookmarks.pl [-a] [file]`
+```
+safari-bookmarks.pl [-a] [file]
+    -a    all : export description
+```
 
 
 Output
