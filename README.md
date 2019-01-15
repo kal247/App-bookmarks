@@ -29,7 +29,7 @@ alias lk="safari-bookmarks.pl | uricolor.pl | fzf --ansi --exact --multi | urifi
 
 Since `open` uses _LaunchServices_ to determine which program to run, common URIs are recognized, such as `ftp://` or `ssh://`. 
 
-**Copy links(s) to clipboard instead of opening :**
+**Copy links(s) to clipboard :**
 ```
 alias lkc="safari-bookmarks.pl | uricolor.pl | fzf --ansi --exact --multi | urifind | xargs pbcopy"
 ```
