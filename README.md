@@ -37,4 +37,4 @@ alias lkc="safari-bookmarks.pl | uricolor.pl | fzf --ansi --exact --multi | urif
 You'll need :
 - [fzf](https://github.com/junegunn/fzf)
 - [urifind](https://github.com/schwern/URI-Find)
-- [uricolor](https://github.com/kal247/uricolor.pl)
+- [uricolor.pl](https://github.com/kal247/uricolor.pl)
