@@ -1,3 +1,5 @@
+# safari-bookmarks.pl
+
 Export Safari bookmarks (and reading list) as plain text.
 
 Default output format : title url [description]
