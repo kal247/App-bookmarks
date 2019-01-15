@@ -1,9 +1,18 @@
-# safari-bookmarks.pl
+safari-bookmarks.pl
+===================
 
-Export Safari bookmarks (and reading list) as plain text.
+Export Safari bookmarks (and reading list) as plain text (mac only).
 
-Default output format : title url [description]
+Reads from `~/Library/Safari/Bookmarks.plist` or first arg (if supplied), writes to stdout.
 
-Reads from ~/Library/Safari/Bookmarks.plist or first arg (if supplied), writes to stdout.
 
-For mac only.
+usage
+-----
+
+`safari-bookmarks.pl [-a] [file]`
+
+
+output
+------
+
+`title url [description]`
