@@ -6,20 +6,20 @@ Export Safari bookmarks (and reading list) as plain text (mac only).
 Reads from `~/Library/Safari/Bookmarks.plist` or first arg (if supplied), writes to stdout.
 
 
-usage
+Usage
 -----
 
 `safari-bookmarks.pl [-a] [file]`
 
 
-output
+Output
 ------
 
 `title url [description]`
 
 
-Search bookmarks interactively from CLI
----------------------------------------
+Search Safari bookmarks interactively from CLI
+----------------------------------------------
 
 **Open links(s) in browser :**
 ```
