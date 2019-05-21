@@ -31,7 +31,7 @@ alias lk="safari-bookmarks.pl | uricolor.pl | fzf --ansi --exact --multi | urifi
 
 **Copy links(s) to clipboard :**
 ```
-alias lkc="safari-bookmarks.pl | uricolor.pl | fzf --ansi --exact --multi | urifind | xargs pbcopy"
+alias lkc="safari-bookmarks.pl | uricolor.pl | fzf --ansi --exact --multi | urifind | pbcopy"
 ```
 
 - You need : [fzf](https://github.com/junegunn/fzf), [URI-Find](https://github.com/schwern/URI-Find) and [uricolor.pl](https://github.com/kal247/uricolor.pl).
