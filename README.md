@@ -36,7 +36,7 @@ alias lk="safari-bookmarks.pl | uricolor.pl | fzf --ansi --exact --multi | urifi
 alias lkc="safari-bookmarks.pl | uricolor.pl | fzf --ansi --exact --multi | urifind | pbcopy"
 ```
 
-- You need : [fzf](https://github.com/junegunn/fzf), [URI-Find](https://github.com/schwern/URI-Find) and [uricolor.pl](https://github.com/kal247/uricolor.pl).
+- You need : [fzf](https://github.com/junegunn/fzf) (homebrew), [URI-Find](https://github.com/schwern/URI-Find) (perlbrew) and [uricolor.pl](https://github.com/kal247/uricolor.pl).
 - Since `open` uses _LaunchServices_ to determine which program to run, most common URIs such as `ftp://` or `ssh://`  are recognized! 
 - You can use `urifind --schemeless` to find schemeless URIs.
 
