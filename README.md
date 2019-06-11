@@ -24,6 +24,8 @@ Output
 Search Safari bookmarks interactively from CLI
 ----------------------------------------------
 
+![](tty.gif)
+
 **Open links(s) in browser :**
 ```
 alias lk="safari-bookmarks.pl | uricolor.pl | fzf --ansi --exact --multi | urifind | xargs open"
