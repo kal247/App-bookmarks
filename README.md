@@ -27,7 +27,7 @@ Search Safari bookmarks interactively from CLI
 ![](tty.gif)
 
 - You need : [fzf](https://github.com/junegunn/fzf) (homebrew), [URI-Find](https://github.com/schwern/URI-Find) (perlbrew) and [uricolor](https://github.com/kal247/App-uricolor).
-- `uricolor.pl` colorizes URIs to distinguish them from text.
+- `uricolor` colorizes URIs to distinguish them from regular text.
 - `fzf` is a fuzzy finder (many options) : use TAB for multiplie selection, press ENTER to confirm, or ESC to cancel.
 - `urifind` extracts all URIs, so any text (file) will work. Try `--schemeless` option to find schemeless URIs.
 - Selected URIs will open with your default browser.
