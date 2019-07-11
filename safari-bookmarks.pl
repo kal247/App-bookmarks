@@ -1,23 +1,28 @@
 #!/usr/bin/env perl
 #
-# safari-bookmarks.pl
+# safari-bookmarks.pl - Export Safari bookmarks as plain text.
 #
-# Export Safari bookmarks (and reading list) as plain text.
-# Default output format : title url [description]
-# Reads from ~/Library/Safari/Bookmarks.plist or first arg (if supplied), writes to stdout.
-# For mac only.
+# safari-bookmarks is a Perl script to export Safari bookmarks (and reading
+# list) as plain text. It reads from ~/Library/Safari/Bookmarks.plist or
+# first arg (if supplied) and writes to STDOUT.
 #
+# For mac only (since it relies on external tool plutil).
+# 
+# Output format : title url [description]
+#
+# 2019.07.11 v0.13 jul : use 5.010, better doc
 # 2019.01.14 v0.12 jul : fixed case sensitive regex
 # 2018.09.21 v0.11 jul : added arg and -a
 # 2018.09.01 v0.10 jul : created
 
+use 5.010;
 use strict;
 use warnings;
 use utf8;
 use Getopt::Std;
 use File::Basename;
 
-our $VERSION 	= '0.12';
+our $VERSION 	= '0.13';
 my $program		= basename($0);
 my $usage   	= <<EOF;
 
@@ -34,10 +39,10 @@ EOF
 my %options = ();
 getopts("hVda", \%options) or die $usage;
 
-my $help        = $options{h} || 0;
-my $version     = $options{V} || 0;
-my $debug       = $options{d} || 0;
-my $all         = $options{a} || 0;
+my $help        = $options{h} // 0;
+my $version     = $options{V} // 0;
+my $debug       = $options{d} // 0;
+my $all         = $options{a} // 0;
 
 die $usage if $help;
 die $VERSION . "\n" if $version;
