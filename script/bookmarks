@@ -17,15 +17,12 @@
 # empty for Internet Explorer.
 
 # TODO :
-# - POD !
-# - with firefox open (locked DB), script does not exit (good or bad?)
-# - plain text and markdown file support
-# - space after fields if empty
-# - dont't die if places.sqlite doesn't exists
-# - dirty plist parsing using external plutil
-# - modules Config::Tiny and Win32 needed for Internet Explorer
-# - support for chrome/chromium https://www.howtogeek.com/255653/how-to-find-your-chrome-profile-folder-on-windows-mac-and-linux/
-# - other os
+# - with firefox open (locked DB), script does not exit but wait (good or bad?)
+# - dirty plist parsing using external tool plutil
+# - export bookmarks from plain text files
+# - export bookmarks from markdown files
+# - support other os
+# - support other browsers
 #
 # 2019.10.22 v0.17 jul : created module
 # 2019.10.17 v0.16 jul : fixed firefox tags
@@ -56,7 +53,7 @@ Usage: $program [-hVda] [-f format] [file ...]
     -V, --version   version
     -d              debug
     -a              all files : process arguments and default locations
-	-f format       any combination of letters t,u,d as title/url/description (default : tud)
+    -f format       any combination of letters t,u,d as title/url/description (default : tud)
 EOF
 
 # options
@@ -270,3 +267,45 @@ foreach my $file (@ARGV)
 }
 
 exit 1;
+
+__END__
+
+=head1 NAME
+
+bookmarks - Export browser bookmarks as plain text.
+
+=head1 SYNOPSIS
+
+    $ bookmarks [-hVda] [-f format] [file ...]
+
+    -h, --help      help
+    -V, --version   version
+    -d              debug
+    -a              all files : process arguments and default locations
+    -f format       any combination of letters t,u,d as title/url/description (default : tud)
+
+=head1 DESCRIPTION
+
+bookmarks is a tool to export bookmarks from files supplied as arguments, or
+from browsers default locations (without arguments). The following browsers
+and platform are supported : Safari (Mac), Firefox (Mac/Linux/Windows) and
+Internet Explorer (Windows). Files with .plist and .sqlite extensions are
+processed as Safari and Firefox bookmarks, respectively, and directories
+named "Favorites" are processed as Internet Explorer favorites.
+
+=head1 BUGS
+
+Please report any bugs or feature requests to C<kaldor@cpan.org>, or through
+the web interface at L<https://github.com/kal247/App-uricolor/issues>.
+
+=head1 AUTHOR
+
+jul, C<kaldor@cpan.org>
+
+=head1 LICENSE AND COPYRIGHT
+
+This software is Copyright (c) 2019 by jul.
+
+This is free software, licensed under:
+
+  The Artistic License 2.0 (GPL Compatible)

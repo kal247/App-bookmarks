@@ -10,12 +10,12 @@ SYNOPSIS
     -V, --version   version
     -d              debug
     -a              all files : process arguments and default locations
-	-f format       any combination of letters t,u,d as title/url/description (default : tud)
+    -f format       any combination of letters t,u,d as title/url/description (default : tud)
 
 DESCRIPTION
 -----------
 
-bookmarks is a tool to export bookmarks from files supplied as arguments, or
+`bookmarks` is a tool to export bookmarks from files supplied as arguments, or
 from browsers default locations (without arguments). The following browsers
 and platform are supported : Safari (Mac), Firefox (Mac/Linux/Windows) and
 Internet Explorer (Windows). Files with .plist and .sqlite extensions are
@@ -33,7 +33,7 @@ SEARCH BOOKMARKS INTERACTIVELY FROM CLI
 ---------------------------------------
 
 This tool can be used to search and open bookmarks interactively from the CLI. The following
-details are for macOS, but it should be similar on any regular OS.
+instructions are for macOS, but it should be similar on any regular OS.
 
 ![](tty.png)
 
@@ -52,12 +52,11 @@ alias lk="safari-bookmarks.pl | uricolor | fzf --ansi --exact --multi | urifind 
 alias lkc="safari-bookmarks.pl | uricolor | fzf --ansi --exact --multi | urifind | pbcopy"
 ```
 
-- `uricolor` colorizes URIs to distinguish them from regular text.
+- `uricolor` colorizes URIs to distinguish them from title and description.
 - `fzf` is a fuzzy finder (with many options) : use TAB for multiple selection, press ENTER to confirm, or ESC to cancel.
 - `urifind` extracts all URIs. Try `uricolor -s` and `urifind --schemeless` to find schemeless URLs.
-- Selected URIs will open with your default browser.
-- Since `open` uses _LaunchServices_ to determine which program to run, most common schemes such as `ftp://` or `ssh://` are recognized and can be open in a single step.
-- By the way, in `Terminal.app`, you can press ⌘ and double click to open any URL.
+- Selected URIs will open with your default browser or application.
+- Since `open` uses macOS _Launch Services_ to determine which program to run, most common schemes such as `ftp://` or `ssh://` are automatically recognized.
 
 
 INSTALLATION
@@ -81,7 +80,7 @@ To install this module manually, run the following commands :
 PREREQUISITES
 -------------
 
-DBI, Config::Any, Config::Tiny (optional), Win32 (optional)
+DBI, Config::Any, Config::Tiny (optional, for IE only), Win32 (optional)
 
 SUPPORT AND DOCUMENTATION
 -------------------------
