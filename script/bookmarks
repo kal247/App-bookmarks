@@ -3,15 +3,15 @@
 # bookmarks - Export browser bookmarks as plain text.
 #
 # bookmarks is a tool to export bookmarks from files supplied as arguments, or
-# from browsers default locations (without arguments). The following browsers
-# and platform are supported :
+# from browsers default locations (when called without arguments). The following
+# browsers and platform are supported :
 #
 # - Safari (Mac)
 # - Firefox (Mac/Linux/Windows)
 # - Chrome (Mac/Linux/Windows)
 # - Internet Explorer (Windows)
 #
-# Files named *.plist, *.sqlite and *Bookmarks are processed as Safari and Firefox
+# Files named *.plist, *.sqlite and *Bookmarks are processed as Safari, firefox
 # and Chrome bookmarks, respectively. Directories named *Favorites" are processed
 # as Internet Explorer favorites.
 #
@@ -20,8 +20,8 @@
 # <title> <url> <description>
 #
 # The <description> field is filled with Safari 'Description', Firefox 'Tags' or
-# empty for Internet Explorer.
-
+# empty for Chrome and Internet Explorer.
+#
 # TODO :
 # - with firefox open (locked DB), script does not exit but wait (good or bad?)
 # - dirty plist parsing using external tool plutil
@@ -334,17 +334,10 @@ bookmarks - Export browser bookmarks as plain text.
 =head1 DESCRIPTION
 
 bookmarks is a tool to export bookmarks from files supplied as arguments, or
-from browsers default locations (without arguments). The following browsers
-and platform are supported : Safari (Mac), Firefox (Mac/Linux/Windows) and
-Internet Explorer (Windows). Files with .plist and .sqlite extensions are
-processed as Safari and Firefox bookmarks, respectively, and directories
-named "Favorites" are processed as Internet Explorer favorites.
-
-bookmarks is a tool to export bookmarks from files supplied as arguments, or
-from browsers default locations (without arguments). The following browsers
-and platform are supported : Safari (Mac), Firefox (Mac/Linux/Windows),
+from browsers default locations (when called without arguments). The following
+browsers and platform are supported : Safari (Mac), Firefox (Mac/Linux/Windows),
 Chrome (Mac/Linux/Windows) and Internet Explorer (Windows). Files named *.plist,
-*.sqlite and *Bookmarks are processed as Safari and Firefox and Chrome bookmarks,
+*.sqlite and *Bookmarks are processed as Safari, Firefox and Chrome bookmarks,
 respectively. Directories named *Favorites" are processed as Internet Explorer
 favorites.
 
