@@ -184,7 +184,7 @@ sub _firefox {
 
     # fix EXCLUSIVE SQLite lock set by Firefox
     my $dir = tempdir( CLEANUP => 1 );
-    copy $dbfile, $dir or die "unable to copy file : $dbfile"
+    copy $dbfile, $dir or die "unable to copy file : $dbfile";
     
     # from now on, we use a tmp db copy
     $dbfile = "$dir/" . basename($dbfile);
