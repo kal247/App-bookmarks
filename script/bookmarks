@@ -37,6 +37,8 @@
 #
 # - Since Firefox sets an EXCLUSIVE SQLite lock, a tmp DB file copy is used.
 #
+# 2021.01.31 v0.25 jul : skip bookmarks.t if URI::Find not installed
+# 2021.01.31 v0.24 jul : fixed missing prereq URI::Find in Makefile.PL
 # 2021.01.23 v0.23 jul : added tests and fixed firefox default location
 # 2021.01.20 v0.22 jul : fixed firefox query again
 # 2020.06.29 v0.21 jul : added markdown and text files support
@@ -59,10 +61,8 @@ use Getopt::Std;
 use File::Basename;
 use File::Temp qw(tempdir);
 use File::Copy qw(copy);
-use URI::Find;
-use URI::Find::Schemeless;
 
-our $VERSION = '0.23';
+our $VERSION = '0.25';
 my $program	 = basename($0);
 my $usage    = <<EOF;
 
@@ -331,6 +331,9 @@ sub _iexplorer {
 
 sub _txt {
 
+	require URI::Find;
+	require URI::Find::Schemeless;
+
     my $file = shift // "";
     warn "\$file: $file\n" if $debug;
 
@@ -362,7 +365,7 @@ sub _txt {
 
 sub _md {
 
-    my $file = shift // "";
+	my $file = shift // "";
     warn "\$file: $file\n" if $debug;
 
     # read file as text

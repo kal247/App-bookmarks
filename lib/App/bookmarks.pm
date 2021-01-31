@@ -3,7 +3,7 @@ package App::bookmarks;
 use strict;
 use warnings;
 
-our $VERSION = '0.23';
+our $VERSION = '0.25';
 
 =head1 NAME
 
