@@ -5,7 +5,7 @@ use warnings;
 
 use Test::More;
 
-eval "use URI::Find";
+eval { require URI::Find };
 if ($@)
 {
 	plan skip_all => "URI::Find required for this test";
