@@ -25,6 +25,7 @@ sources are supported :
 - Firefox (Mac/Linux/Windows)
 - Chrome (Mac/Linux/Windows)
 - Internet Explorer (Windows)
+- Edge (Windows)
 - Plain text (.txt)
 - Markdown (.md)
 
