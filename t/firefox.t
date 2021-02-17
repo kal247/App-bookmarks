@@ -5,10 +5,13 @@ use warnings;
 
 use Test::More;
 
-eval { require DBI };
+eval {
+    require DBI;
+    require DBD::SQLite;
+};
 if ($@)
 {
-    plan skip_all => "DBI required for this test";
+    plan skip_all => "modules DBI DBD::SQLite required for this test";
 }
 else
 {

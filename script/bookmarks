@@ -15,20 +15,19 @@
 # - Markdown (.md)
 #
 # Files named *.plist, *.sqlite and *Bookmarks are processed as Safari, Firefox
-# and Chrome bookmarks, respectively. Directories named *Favorites" are processed
+# and Chrome bookmarks, respectively. Directories named *Favorites are processed
 # as Internet Explorer favorites.
 #
-# The fields <title>, <url> and <description> are retrieved (when existing) and
-# are available for exporting (in the desired format), by default :
-# <title> <url> <description>
+# Fields <title>, <url> and <description> are retrieved (when existing) and
+# exported in the desired format, by default : <title> <url> <description>
 #
-# The same format is used for plain text and markdown files :
+# That same format is used for plain text and markdown files :
 #
-#   plain text example http://example.txt #tag1 #tag2
-#   [markdown example](http://example.md) #tag1 #tag2
+#   plain text example http://example.txt with a description
+#   [markdown example](http://example.md) with a description
 #
-# The <description> field is filled with Safari 'Description', Firefox 'Tags' or
-# empty for Chrome and Internet Explorer.
+# The <description> field contains Safari 'Description' or Firefox 'Tags' but is
+# empty for Chrome, Internet Explorer and Edge.
 #
 # Implementation Notes :
 #
@@ -38,6 +37,7 @@
 #
 # - Since Firefox sets an EXCLUSIVE SQLite lock, a tmp DB file copy is used.
 #
+# 2021.02.17 v0.28 jul : fixed missing require DBD::SQLite (firefox)
 # 2021.02.16 v0.27 jul : added win32 Edge support, fixed Chrome bug (localappdata), fixed win32 bug (find), more tests (firefox)
 # 2021.01.31 v0.26 jul : improved handling of optional dependencies
 # 2021.01.31 v0.25 jul : skip bookmarks.t if URI::Find not installed
@@ -65,7 +65,7 @@ use File::Basename;
 use File::Temp qw(tempdir);
 use File::Copy qw(copy);
 
-our $VERSION = '0.27';
+our $VERSION = '0.28';
 my $program  = basename($0);
 my $usage    = <<EOF;
 
@@ -197,10 +197,11 @@ sub _firefox {
 
     eval {
         require DBI;
+        require DBD::SQLite;
     };
     if ($@)
     {
-        die "to process Firefox bookmarks, you need to install module DBI\n";
+        die "to process Firefox bookmarks, you need to install modules DBI DBD::SQLite\n";
     }
 
     my $dbfile = shift // "";
@@ -453,23 +454,40 @@ bookmarks - Export browser bookmarks as plain text.
 
 bookmarks is a tool to export bookmarks from files supplied as arguments, or
 from browsers default locations (when called without arguments). The following
-sources are supported : Safari (Mac), Firefox (Mac/Linux/Windows),
-Chrome (Mac/Linux/Windows), Internet Explorer (Windows), Edge (Windows), plain
-text (.txt) and markdown (.md). Files named *.plist, *.sqlite and *Bookmarks
-are processed as Safari, Firefox and Chrome bookmarks, respectively. Directories
-named *Favorites are processed as Internet Explorer favorites.
+sources are supported :
 
-The fields <title>, <url> and <description> are retrieved (when existing) and
-are available for exporting (in the desired format), by default :
-<title> <url> <description>
+=over
 
-The same format is used for plain text and markdown files :
+=item - Safari (Mac)
 
-    plain text example http://example.txt #tag1 #tag2
-    [markdown example](http://example.md) #tag1 #tag2
+=item - Firefox (Mac/Linux/Windows)
 
-The <description> field is filled with Safari 'Description', Firefox 'Tags' or
-empty for Chrome and Internet Explorer.
+=item - Chrome (Mac/Linux/Windows)
+
+=item - Internet Explorer (Windows)
+
+=item - Edge (Windows)
+
+=item - Plain text (.txt)
+
+=item - Markdown (.md)
+
+=back
+
+Files named *.plist, *.sqlite and *Bookmarks are processed as Safari, Firefox
+and Chrome bookmarks, respectively. Directories named *Favorites are processed
+as Internet Explorer favorites.
+
+Fields <title>, <url> and <description> are retrieved (when existing) and
+exported in the desired format, by default : <title> <url> <description>
+
+That same format is used for plain text and markdown files :
+
+    plain text example http://example.txt with a description
+    [markdown example](http://example.md) with a description
+
+The <description> field contains Safari 'Description' or Firefox 'Tags' but is
+empty for Chrome, Internet Explorer and Edge.
 
 =head1 BUGS
 

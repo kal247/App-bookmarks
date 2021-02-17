@@ -5,10 +5,12 @@ use warnings;
 
 use Test::More;
 
-eval { require URI::Find };
+eval {
+    require URI::Find;
+};
 if ($@)
 {
-    plan skip_all => "URI::Find required for this test";
+    plan skip_all => "module URI::Find required for this test";
 }
 else
 {
