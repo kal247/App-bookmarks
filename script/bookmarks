@@ -37,6 +37,8 @@
 #
 # - Since Firefox sets an EXCLUSIVE SQLite lock, a tmp DB file copy is used.
 #
+# 2021.02.17 v0.30 jul : added markdown regex by Michaël Perrin
+#                        files without extension are now processed as plain text
 # 2021.02.17 v0.28 jul : fixed missing require DBD::SQLite (firefox)
 # 2021.02.16 v0.27 jul : added win32 Edge support, fixed Chrome bug (localappdata), fixed win32 bug (find), more tests (firefox)
 # 2021.01.31 v0.26 jul : improved handling of optional dependencies
@@ -65,7 +67,7 @@ use File::Basename;
 use File::Temp qw(tempdir);
 use File::Copy qw(copy);
 
-our $VERSION = '0.28';
+our $VERSION = '0.30';
 my $program  = basename($0);
 my $usage    = <<EOF;
 
@@ -126,6 +128,11 @@ if (!@ARGV or $all)
     # do they indeed exist?
     @ARGV = grep { -e $_ } @ARGV;
 }
+
+#@_ = ('x', 'z');
+#print join '-', grep {defined} ('x', undef, 'z');
+#join '-', 
+#die;
 
 # option -f
 my %dispatch = (
@@ -381,11 +388,51 @@ sub _txt {
  
     while (my $line = <$fh>)
     {
-        if ( $line =~ /(.*)\s+($regex)\s+(.*)/ )    # match title url desc
+        if ( $line =~ /(.*)\s+($regex)\s+(.*)/ )    # match <title> <url> <description>
         {
             my $title       = $1;
             my $url         = $2;
             my $description = $3;
+
+            $print_bookmark->($title, $url, $description);
+        }   
+    }
+}
+
+sub _gemini {
+
+    eval {
+        require URI::Find;
+        require URI::Find::Schemeless;
+    };
+    if ($@)
+    {
+        die "to process text files, you need to install module URI::Find\n";
+    }
+
+    my $file = shift // "";
+    warn "\$file: $file\n" if $debug;
+
+    # get uri regex
+    my $class = $schemeless ? "URI::Find::Schemeless" : "URI::Find";    # copy-paste from urifind
+    my $finder = $class->new( sub {
+        my ($uri, $orig_uri) = @_;
+        return $orig_uri;
+    });
+
+    my $regex = $finder->uri_re;
+    $regex = $regex . '|' . $finder->schemeless_uri_re if $schemeless;
+
+    # read file as text
+    open(my $fh, '<:encoding(UTF-8)', $file) or die "unable to read file : $file";
+ 
+    while (my $line = <$fh>)
+    {
+        if ( $line =~ /^=>\s+($regex)\s+(.*)/ )    # match => <url> <title>
+        {
+            my $title       = $2;
+            my $url         = $1;
+            my $description = "";
 
             $print_bookmark->($title, $url, $description);
         }   
@@ -402,12 +449,40 @@ sub _md {
 
     while (my $line = <$fh>)
     {
-        if ( $line =~ /\s*\[(.*)\]\((.*)\)\s*(.*)/ )    # match [title](url) desc
+		# regex by Michaël Perrin :
+		# http://blog.michaelperrin.fr/2019/02/04/advanced-regular-expressions/
+        if ( $line =~					
+		/								
+		(?<text_group>                  # Text group, including square brackets
+		  \[
+		    (?>                         # (?> defines an atomic group, this is a performance improvement when using recursion
+		      [^\[\]]+                  # Look for any char except closing square bracket
+		      |(?&text_group)           # OR: find recursively an other pattern with opening and closing square brackets
+		    )*
+		  \]
+		)
+		(?:
+		  \(
+		    (?<url>\S*?)                # URL: non-greedy non-whitespace characters
+		    (?:
+		      [ ]
+		      "
+		        (?<title>
+		          (?:[^"]|(?<=\\)")*?   # Title without double quotes around
+		        )
+		      "
+		    )?
+		  \)
+		)
+		/x
+		)    # match [<title>](<url> "<description>") OLD was [<title>](<url>) <description>
         {
             my $title       = $1;
             my $url         = $2;
             my $description = $3;
         
+			$title =~ s/^\[|\]$//g; # strip [...]
+		
             $print_bookmark->($title, $url, $description);
         }
     }
@@ -426,8 +501,9 @@ foreach my $file (@ARGV)
     elsif (-f $file and $name =~ /\.sqlite$/)  { _firefox($file);   }
     elsif (-f $file and $name =~ /Bookmarks$/) { _chrome($file);    }
     elsif (-d $file and $name =~ /Favorites$/) { _iexplorer($file); }
-    elsif (-f $file and $name =~ /\.txt$/)     { _txt($file);       }
     elsif (-f $file and $name =~ /\.md$/)      { _md($file);        }
+    elsif (-f $file and $name =~ /\.gmi$/)     { _gemini($file);    }
+    elsif (-f $file )                          { _txt($file);       }
     else  { die "unable to process file : $file"; }
 }
 
