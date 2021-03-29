@@ -1,8 +1,10 @@
 Revision history for App-bookmarks
 
-0.30    2021.03.23
-        added great Markdown regex by Michaël Perrin (thank you!)
-        files without extension are now processed as plain text
+0.30    2021.03.29
+        added great markdown regex by Michaël Perrin (thank you!)
+        process files without extension as plain text
+        fixed extra spaces printed after empty fields
+        added gemini support
 
 0.28    2021.02.17
         fixed missing require DBD::SQLite (firefox)
