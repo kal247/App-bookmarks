@@ -37,6 +37,7 @@
 # - Since Firefox sets an EXCLUSIVE SQLite lock, a tmp DB file copy is used.
 # - sources are read as UTF-8.
 #
+# 2021.03.30 v0.31 jul : skip gemini.t if URI::Find not installed
 # 2021.03.29 v0.30 jul : added great markdown regex by Michaël Perrin
 #                        process files without extension as plain text
 #                        fixed extra spaces printed after empty fields
@@ -402,7 +403,7 @@ sub _gemini {
     };
     if ($@)
     {
-        die "to process text files, you need to install module URI::Find\n";
+        die "to process Gemini files, you need to install module URI::Find\n";
     }
 
     my $file = shift // "";
